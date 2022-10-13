@@ -12,8 +12,8 @@ const teamMembers = [];
 
 // Prompts user for manager information
 const createManager = () => {
-  console.log("Welcome to the Team Roster Generator!")
-  console.log("Use 'npm run reset' to reset the /dist folder.")
+  console.log("Welcome to the Team Roster Generator!");
+  console.log("Use 'npm run reset' to reset the /dist folder.");
 
   return inquirer.prompt([
     {
@@ -45,7 +45,7 @@ const createManager = () => {
     console.log(manager);
     createEmployee()
   })
-}
+};
 
 // Prompts user for team member type
 const createEmployee = () => {
@@ -72,7 +72,7 @@ const createEmployee = () => {
         writeFile()
     }
   })
-}
+};
 
 // Prompts for creating an engineer
 const createEngineer = () => {
@@ -105,7 +105,7 @@ const createEngineer = () => {
     console.log(engineer);
     createEmployee()
   })
-}
+};
 
 // Prompts for creating an intern
 const createIntern = () => {
@@ -138,7 +138,7 @@ const createIntern = () => {
     console.log(intern);
     createEmployee()
   })
-}
+};
 
 // Writes the team members array to an index.html file
 const writeFile = () => {

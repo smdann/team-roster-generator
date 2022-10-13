@@ -1,0 +1,24 @@
+/* Header */
+.jumbotron {
+  background-image: linear-gradient(to right, #5CE1E6, #004AAD);
+  color: white;
+}
+
+/* Cards */
+.card {
+  margin: 1rem
+}
+
+.card-header {
+  background-color: #004AAD;
+  color: white;
+  text-align: center;
+}
+
+.fa-people-roof, .fa-laptop-code, .fa-graduation-cap {
+  color: #5CE1E6
+}
+
+.card-body {
+  text-align: center;
+}
