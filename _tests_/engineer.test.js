@@ -1,7 +1,7 @@
 const Engineer = require("../lib/engineer");
 
 describe("Engineer", () => {
-  describe("name", () => {
+  describe("Engineer Object", () => {
     it("should create an engineer object", () => {
       const engineer = new Engineer("Bob", 2, "bob@test.com", "bob123");
 

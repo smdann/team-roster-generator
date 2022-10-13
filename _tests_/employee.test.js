@@ -1,20 +1,20 @@
 const Employee = require("../lib/employee");
 
 describe("Employee", () => {
-  describe("name", () => {
+  describe("Employee Object", () => {
     it("should create an object with name, id, and email", () => {
       const employee = new Employee("Shannon", 1, "sdann@test.com");
 
-      expect(employee.name).toEqual(expect.any(String));
-      expect(employee.id).toEqual(expect.any(Number));
-      expect(employee.email).toEqual(expect.any(String));
+      expect(employee.name).toEqual("Shannon");
+      expect(employee.id).toEqual(1);
+      expect(employee.email).toEqual("sdann@test.com");
     });
 
   describe("getName", () => {
     it("should get the employee's name", () => {
       const employee = new Employee("Shannon", 1, "sdann@test.com");
 
-      expect(employee.getName()).toEqual(expect.any(String));
+      expect(employee.getName()).toEqual("Shannon");
     })
   });
 
@@ -22,7 +22,7 @@ describe("Employee", () => {
     it("should get the employee's id", () => {
       const employee = new Employee("Shannon", 1, "sdann@test.com");
 
-      expect(employee.getId()).toEqual(expect.any(Number));
+      expect(employee.getId()).toEqual(1);
     })
   });
 
@@ -30,7 +30,7 @@ describe("Employee", () => {
     it("should get the employee's email", () => {
       const employee = new Employee("Shannon", 1, "sdann@test.com");
 
-      expect(employee.getEmail()).toEqual(expect.any(String));
+      expect(employee.getEmail()).toEqual("sdann@test.com");
     })
   });
 

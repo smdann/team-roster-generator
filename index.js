@@ -54,7 +54,7 @@ const createEmployee = () => {
       type: "list",
       message: "Which type of team member would you like to add?",
       name: "role",
-      choices: ["Engineer", "Intern", "I'm done adding team members."],
+      choices: ["Engineer", "Intern", "I'm finished building my team."],
     },
   ])
   // Performs switch based on role selected and starts appropriate function

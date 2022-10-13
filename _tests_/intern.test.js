@@ -1,7 +1,7 @@
 const Intern = require("../lib/intern");
 
 describe("Intern", () => {
-  describe("name", () => {
+  describe("Intern Object", () => {
     it("should create an intern object", () => {
       const intern = new Intern("Sally", 4, "sally@test.com", "U of M");
 
