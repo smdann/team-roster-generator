@@ -1,13 +1,14 @@
+// Required packages / file paths
 const inquirer = require("inquirer");
 const fs = require("fs");
-
+const path = require("path");
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
+const templateHTML = require("./src/template");
 
+// Team members array
 const teamMembers = [];
-
-const templateHTML = require("./src/template")
 
 // Prompts user for manager information
 const createManager = () => {
@@ -36,16 +37,17 @@ const createManager = () => {
       name: "officeNumber",
     }
   ])
+  // Creates new manager, adds to team members array, & starts createEmployee function
   .then(managerInfo => {
     const {name, id, email, officeNumber} = managerInfo;
     const manager = new Manager (name, id, email, officeNumber);
     teamMembers.push(manager);
     console.log(manager);
+    createEmployee()
   })
 }
 
-
-// Prompts user for team member type and information
+// Prompts user for team member type
 const createEmployee = () => {
   return inquirer.prompt([
     {
@@ -54,77 +56,98 @@ const createEmployee = () => {
       name: "role",
       choices: ["Engineer", "Intern", "I'm done adding team members."],
     },
-    {
-      type: "input",
-      message: "What is the team member's name?",
-      name: "name",
-    },
-    {
-      type: "input",
-      message: "What is the team member's ID?",
-      name: "id",
-    },
-    {
-      type: "input",
-      message: "What is the team member's email?",
-      name: "email",
-    },
-    {
-      type: "input",
-      message: "What is the team member's GitHub username?",
-      name: "github",
-      when: (list) => list.role === "Engineer",
-    },
-    {
-      type: "input",
-      message: "What school does the team member attend?",
-      name: "school",
-      when: (list) => list.role === "Intern",
-    },
-    {
-      type: "confirm",
-      message: "Would you like to add more team members?",
-      name: "addMoreEmployees",
-      default: false
-    }
   ])
-
+  // Performs switch based on role selected and starts appropriate function
   .then(employeeInfo => {
-    let{name, id, email, role, github, school, addMoreEmployees} = employeeInfo;
-    let employee;
+    switch(employeeInfo.role){
+      case "Engineer":
+        createEngineer()
+        break;
 
-    if (role === "Engineer") {
-      employee = new Engineer (name, id, email, github);
-      console.log(employee);
-    } else if (role === "Intern") {
-      employee = new Intern (name, id, email, school);
-      console.log(employee);
-    }
-    teamMembers.push(employee);
+      case "Intern":
+        createIntern()
+        break;
 
-    if (addMoreEmployees) {
-      return createEmployee(teamMembers);
-    } else {
-      return teamMembers;
+      default:
+        writeFile()
     }
   })
 }
 
-const writeFile = htmlFileContent => {
-  fs.writeFile("./dist/index.html", htmlFileContent, err => {
-    err ? console.log(err) : console.log("Your team roster has been generated!")
+// Prompts for creating an engineer
+const createEngineer = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      message: "What is the Engineer's name?",
+      name: "engineerName",
+    },
+    {
+      type: "input",
+      message: "What is the Engineer's ID?",
+      name: "id",
+    },
+    {
+      type: "input",
+      message: "What is the Engineer's email?",
+      name: "email",
+    },
+    {
+      type: "input",
+      message: "What is the Engineer's GitHub username?",
+      name: "github",
+    }
+  ]) 
+  // Creates new engineer & adds to team members array
+  .then((answers) => {
+    const engineer = new Engineer (answers.engineerName, answers.id, answers.email, answers.github);
+    teamMembers.push(engineer);
+    console.log(engineer);
+    createEmployee()
+  })
+}
+
+// Prompts for creating an intern
+const createIntern = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      message: "What is the Intern's name?",
+      name: "internName",
+    },
+    {
+      type: "input",
+      message: "What is the Intern's ID?",
+      name: "id",
+    },
+    {
+      type: "input",
+      message: "What is the Intern's email?",
+      name: "email",
+    },
+    {
+      type: "input",
+      message: "What is the Intern's school?",
+      name: "school",
+    }
+  ]) 
+  // Creates new intern & adds to team members array
+  .then((answers) => {
+    const intern = new Intern (answers.internName, answers.id, answers.email, answers.school);
+    teamMembers.push(intern);
+    console.log(intern);
+    createEmployee()
+  })
+}
+
+// Writes the team members array to an index.html file
+const writeFile = () => {
+  fs.writeFile("./dist/index.html", templateHTML(teamMembers), err => {
+    err ? console.log(err) : console.log("Your team roster has been generated in ./dist!")
   })
 };
 
+// Initiates the user prompts for creating a manager
 createManager()
-  .then(createEmployee)
-  .then(teamMembers => {
-    return templateHTML(teamMembers);
-  })
-  .then(rosterHTML => {
-    return writeFile(rosterHTML);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+
   
