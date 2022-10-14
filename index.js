@@ -13,7 +13,6 @@ const teamMembers = [];
 // Prompts user for manager information
 const createManager = () => {
   console.log("Welcome to the Team Roster Generator!");
-  console.log("Use 'npm run reset' to reset the /dist folder.");
 
   return inquirer.prompt([
     {
